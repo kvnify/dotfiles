@@ -1,0 +1,76 @@
+[color]
+        ui = auto
+        diff = auto
+[alias]
+        co = checkout
+        cdiff = diff --color=always
+        unstage = reset HEAD --
+        last = log -1 HEAD
+        tip = log -1 HEAD
+        top = log --oneline -10 --date=short --pretty=tformat:\"%Cgreen%h %Creset %cn %Cblue[%Creset%cd (%cr)%Cblue]>>%Creset %s\"
+        oneline = log --oneline --date=short --pretty=tformat:\"%Cgreen%h %Creset %cn %Cblue[%Creset%cd (%cr)%Cblue]>>%Creset %s\"
+        st = status
+        grepn = grep --name-only
+        pull = pull --rebase
+        graph = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+        uncommit = reset --soft HEAD~
+[difftool "Kaleidoscope"]
+        cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
+
+# If you want to set up Kaleidoscope as the default diff tool,
+# then also set the following variables:
+[difftool]
+        prompt = false
+[diff]
+        tool = Kaleidoscope
+	algorithm = patience
+[mergetool "Kaleidoscope"]
+        cmd = ksdiff --merge --output \"$MERGED\" --base \"$BASE\" -- \"$LOCAL\" --snapshot \"$REMOTE\" --snapshot
+
+# If you want to set up Kaleidoscope as the default merge tool,
+# then also set the following variables:
+        trustExitCode = true
+[mergetool]
+        prompt = false
+[merge]
+        tool = Kaleidoscope
+[core]
+	editor = code -w
+	pager = less
+        excludesfiles = /Users/kevinhendry/.gitignore_global
+	commitGraph = true
+	excludefiles = /Users/kevinhendry/.gitignore_global
+	excludesfile = /Users/kevinhendry/.gitignore_global
+[giggle]
+	main-window-maximized = false
+	main-window-geometry = 1186x862+682+62
+	file-view-vpane-position = 793
+	history-view-vpane-position = 385
+	main-window-view = HistoryView
+[rerere]
+	enabled = true
+[push]
+	default = simple
+[branch]
+	autosetuprebase = always
+[user]
+	name = Kevin Hendry
+	email = kevin.hendry@shopify.com
+[filter "lfs"]
+	clean = git-lfs clean %f
+	smudge = git-lfs smudge %f
+	required = true
+[init]
+        defaultBranch = main
+[credential]
+	helper = 
+	helper = store --file /opt/dev/var/private/git_credential_store
+[gc]
+	writeCommitGraph = true
+[protocol]
+	version = 2
+[url "https://github.com/Shopify/"]
+	insteadOf = git@github.com:Shopify/
+	insteadOf = git@github.com:shopify/
+	insteadOf = ssh://git@github.com/Shopify/
+	insteadOf = ssh://git@github.com/shopify/
