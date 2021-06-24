@@ -35,7 +35,7 @@
 [merge]
         tool = Kaleidoscope
 [core]
-	editor = code -w
+	editor = vim -w
 	pager = less
         excludesfiles = /Users/kevinhendry/.gitignore_global
 	commitGraph = true
