@@ -35,12 +35,10 @@
 [merge]
         tool = Kaleidoscope
 [core]
-	editor = vim -w
+	editor = vim 
 	pager = less
-        excludesfiles = /Users/kevinhendry/.gitignore_global
 	commitGraph = true
-	excludefiles = /Users/kevinhendry/.gitignore_global
-	excludesfile = /Users/kevinhendry/.gitignore_global
+	excludesfile = ~/.gitignore_global
 [giggle]
 	main-window-maximized = false
 	main-window-geometry = 1186x862+682+62
