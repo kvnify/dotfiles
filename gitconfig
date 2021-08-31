@@ -35,7 +35,7 @@
 [merge]
         tool = Kaleidoscope
 [core]
-	editor = vim 
+	editor = vim
 	pager = less
 	commitGraph = true
 	excludesfile = ~/.gitignore_global
@@ -61,7 +61,6 @@
 [init]
         defaultBranch = main
 [credential]
-	helper = 
 	helper = store --file /opt/dev/var/private/git_credential_store
 [gc]
 	writeCommitGraph = true

@@ -1,10 +1,33 @@
 "===============================================================================
 "==========  CUSTOMIZATION (vimrc)  ============================================
-" Last Modified: April 26, 2021
+" Last Modified: August 31, 2021
 "===============================================================================
+set nocompatible
 filetype off
-call pathogen#runtime_append_all_bundles() 
-call pathogen#helptags()
+
+" ======================= Begin Vundle Configuration =====================
+
+set runtimepath+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'kien/ctrlp.vim.git'
+Plugin 'drewtempelmeyer/palenight.vim.git'
+Plugin 'rakr/vim-one.git'
+Plugin 'vim-airline/vim-airline.git'
+Plugin 'vim-airline/vim-ariline-themes.git'
+Plugin 'elzr/vim-json.git'
+Plugin 'pangloss/vim-javascript.git'
+Plugin 'scrooloose/nerdtree.git'
+Plugin 'tpope/vim-fugitive.git'
+Plugin 'tpope/vim-markdown.git'
+Plugin 'tpope/vim-rails.git'
+Plugin 'vim-ruby/vim-ruby.git'
+Plugin 'vim-scripts/IndexedSearch.git'
+Plugin 'tpope/vim-rbenv.git'
+
+call vundle#end()
+" ======================= End Vundle Configuration =====================
 
 syntax on
 filetype plugin indent on
@@ -96,18 +119,18 @@ colorscheme palenight
 set background=dark
 
 if has ("gui_running")
-    set cursorline
-    set guicursor=a:blinkon0
-    set guifont=Consolas\ 11
-    set guioptions=agirLtc
+  set cursorline
+  set guicursor=a:blinkon0
+  set guifont=Consolas\ 11
+  set guioptions=agirLtc
 endif
 
 " Keep bzr commit logs <=70 chars per line
 if expand("%:t") =~ "^bzr_log*"
-    set textwidth=70
-    set filetype=none
-    syn match commitComment "^#.*"
-    hi link commitComment Comment
+  set textwidth=70
+  set filetype=none
+  syn match commitComment "^#.*"
+  hi link commitComment Comment
 endif
 
 set cscopequickfix=s-,c-,d-,i-,t-,e-
@@ -115,45 +138,20 @@ set cscopetag
 
 "CScope Stuff
 if has("cscope")
-   set csto=1
-   set cst
-   set nocsverb
-   " add any database in current directory
-   if filereadable("cscope.out")
-      cs add cscope.out
-      " else add database pointed to by environment
-   elseif $CSCOPE_DB != ""
-      cs add $CSCOPE_DB
-   endif
-   set csverb
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+    cs add cscope.out
+    " else add database pointed to by environment
+  elseif $CSCOPE_DB != ""
+    cs add $CSCOPE_DB
+  endif
+  set csverb
 endif
 
-"Taglist Stuff
-"if filereadable('/usr/bin/ctags')
-    "let Tlist_Ctags_Cmd = '/usr/bin/ctags'
-    "let Tlist_Process_File_Always = 1
-    "let Tlist_File_Fold_Auto_Close = 1
-    "let Tlist_Auto_Update = 1
-    "set title titlestring=%<%f\ \ \ \ \ \ \ \ \ %([\ %{Tlist_Get_Tag_Prototype_By_Line()}\ ]%)
-    "nmap <F11> :TlistToggle<CR>
-    "nmap <F10> :TlistUpdate<CR>
-"endif
-
 nmap <F9> :NERDTreeToggle<CR>
-
-" Make a lovely statusline
-" set statusline=   " clear the statusline for when vimrc is reloaded
-" sset statusline+=%-3.3n\                      " buffer number
-" sset statusline+=%f\                          " file name
-" sset statusline+=%h%m%r%w                     " flags
-" sset statusline+=[%{strlen(&ft)?&ft:'none'},  " filetype
-" sset statusline+=%{strlen(&fenc)?&fenc:&enc}, " encoding
-" sset statusline+=%{&fileformat}]              " file format
-" sset statusline+=%=                           " right align
-" sset statusline+=%{fugitive#statusline()}
-" sset statusline+=%{synIDattr(synID(line('.'),col('.'),1),'name')}\  " highlight
-" sset statusline+=%b,0x%-8B\                   " current char
-" sset statusline+=%-14.(%l,%c%V%)\ %<%P        " offset
 
 set notitle
 set noautochdir
@@ -197,7 +195,7 @@ set wildmode=list:longest
 set novisualbell
 set nowrap
 set linebreak
-set browsedir=current 
+set browsedir=current
 set foldlevelstart=999
 "set foldmethod=syntax
 set foldnestmax=2
@@ -234,7 +232,7 @@ map <silent> <Leader>db :call Kwbd(1)<CR>
 map <silent> <Leader>bo :call BufOnly()<CR>
 
 " Make spacebar open and close folds.
-nnoremap <Space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR> 
+nnoremap <Space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
 " Backspace deletes folds
 nnoremap <BS> zd
@@ -281,11 +279,6 @@ nmap <F4> :so %<CR>
 " Map F5 to toggle spelling (local function)
 map <silent> <f5> :call Speller()<cr>
 
-" XPSnippets options
-let g:xptemplate_bundle = 'javascript_jquery'
-let g:xptemplate_brace_complete = '([{'
-let g:xptemplate_vars = "SParg="
-
 " Bring up the CtrlP window
 nmap <silent> ,t :CtrlP<CR>
 
@@ -301,7 +294,7 @@ let g:indent_guides_indent_levels = 5
 " GrepCurrentBuffer: Grep the current buffer for the word under the cursor
 command! -nargs=1 GrepCurrentBuffer call GrepCurrentBuffer('<args>')
 fun! GrepCurrentBuffer(q)
-	let save_cursor = getpos(".")
+  let save_cursor = getpos(".")
   let save_errorformat = &errorformat
   try
     set errorformat=%f:%l:%m
@@ -317,37 +310,28 @@ noremap <leader>. :GrepCurrentBuffer <C-r><C-w><cr>
 
 " Speller: Turn on/off spellchecker."{{{
 function! Speller()
-        if (&spell)
-                setlocal nospell
-                echo "Speller OFF"
-        else
-                setlocal spell spelllang=en_ca
-                echo "Speller ON"
-        endif
+  if (&spell)
+    setlocal nospell
+    echo "Speller OFF"
+  else
+    setlocal spell spelllang=en_ca
+    echo "Speller ON"
+  endif
 endfunction
 command! Spell call Speller()
 " End Speller }}}
 
 " TabMessage: Put output of ex commands in a new tab."{{{
 function! TabMessage(cmd)
-    redir => message
-    silent execute a:cmd
-    redir END
-    tabnew
-    silent put=message          
-    set nomodified
+  redir => message
+  silent execute a:cmd
+  redir END
+  tabnew
+  silent put=message          
+  set nomodified
 endfunction
 command! -nargs=+ -complete=command TabMessage call TabMessage(<q-args>)
 " End TabMessage }}}
-
-" Highlight trailing whitespace in red
-"highlight ExtraWhitespace ctermbg=red guibg=red
-"match ExtraWhitespace /\s\+$/
-"autocmd BufWinEnter * match ExtraWhitespace /\s\+$/
-"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-"autocmd InsertLeave * match ExtraWhitespace /\s\+$/
-"autocmd BufWinLeave * call clearmatches()
-" End highlight trailing whitespace
 
 " JumpCursorOnEdit(): Make cursor jump to last known line."{{{
 augroup JumpCursorOnEdit
@@ -379,132 +363,132 @@ augroup END
 " BufSel: Select from buffers matching a certain pattern (case insensitive)"{{{
 "         Case sensitivity can be altered by setting g:BufSel_Case_Sensitive
 function! BufSel(pattern)
-    let buflist = []
-    let bufcount = bufnr("$")
-    let currbufnr = 1
+  let buflist = []
+  let bufcount = bufnr("$")
+  let currbufnr = 1
 
-    while currbufnr <= bufcount
-        if(buflisted(currbufnr))
-            let currbufname = bufname(currbufnr)
-            if (exists("g:BufSel_Case_Sensitive") == 0 || g:BufSel_Case_Sensitive == 0)
-                let curmatch = tolower(currbufname)
-                let patmatch = tolower(a:pattern)
-            else
-                let curmatch = currbufname
-                let patmatch = a:pattern
-            endif
-            if(match(curmatch, patmatch) > -1)
-                call add(buflist, currbufnr)
-            endif
-        endif
-        let currbufnr = currbufnr + 1
-    endwhile
-    if(len(buflist) > 1)
-        for bufnum in buflist
-            echo bufnum . ":      ". bufname(bufnum)
-        endfor
-        let desiredbufnr = input("Enter buffer number: ")
-        if(strlen(desiredbufnr) != 0)
-            exe ":bu ". desiredbufnr
-        endif
-    elseif (len(buflist) == 1)
-        exe ":bu " . get(buflist,0)
-    else
-        echo "No matching buffers"
+  while currbufnr <= bufcount
+    if(buflisted(currbufnr))
+      let currbufname = bufname(currbufnr)
+      if (exists("g:BufSel_Case_Sensitive") == 0 || g:BufSel_Case_Sensitive == 0)
+        let curmatch = tolower(currbufname)
+        let patmatch = tolower(a:pattern)
+      else
+        let curmatch = currbufname
+        let patmatch = a:pattern
+      endif
+      if(match(curmatch, patmatch) > -1)
+        call add(buflist, currbufnr)
+      endif
     endif
+    let currbufnr = currbufnr + 1
+  endwhile
+  if(len(buflist) > 1)
+    for bufnum in buflist
+      echo bufnum . ":      ". bufname(bufnum)
+    endfor
+    let desiredbufnr = input("Enter buffer number: ")
+    if(strlen(desiredbufnr) != 0)
+      exe ":bu ". desiredbufnr
+    endif
+  elseif (len(buflist) == 1)
+    exe ":bu " . get(buflist,0)
+  else
+    echo "No matching buffers"
+  endif
 endfunction 
 command! -nargs=1 -complete=buffer Bs :call BufSel("<args>")
 "}}}
 
 " Kwbd: Kill the current buffer, but don't change the layout."{{{
 function! Kwbd(kwbdStage)
-    if(a:kwbdStage == 1)
-        let g:kwbdBufNum = bufnr("%")
-        let g:kwbdWinNum = winnr()
-        windo call Kwbd(2)
-        execute "bdelete " . g:kwbdBufNum
-        execute "normal " . g:kwbdWinNum . ""
-    else
-        if(bufnr("%") == g:kwbdBufNum)
-            let prevbufvar = bufnr("#")
-            if(prevbufvar > 0 && buflisted(prevbufvar) && prevbufvar != g:kwbdBufNum)
-                b #
-            else
-                bn
-            endif
-        endif
+  if(a:kwbdStage == 1)
+    let g:kwbdBufNum = bufnr("%")
+    let g:kwbdWinNum = winnr()
+    windo call Kwbd(2)
+    execute "bdelete " . g:kwbdBufNum
+    execute "normal " . g:kwbdWinNum . ""
+  else
+    if(bufnr("%") == g:kwbdBufNum)
+      let prevbufvar = bufnr("#")
+      if(prevbufvar > 0 && buflisted(prevbufvar) && prevbufvar != g:kwbdBufNum)
+        b #
+      else
+        bn
+      endif
     endif
+  endif
 endfunction
 " End Kwbd }}}
 
 " BufOnly: Delete all listed buffers except the current one. "{{{
 function! BufOnly()
-    let curBuffer = bufnr("%")
-    let ListedBuffers = []
-    let i = 1
-    while (i <= bufnr("$"))
-        if (bufexists(i) && buflisted(i))
-            call add(ListedBuffers, i)
-        endif
-        let i+= 1
-    endwhile
-    for item in ListedBuffers
-        if (item != curBuffer)
-            execute "silent bdelete " . item
-        endif
-    endfor
+  let curBuffer = bufnr("%")
+  let ListedBuffers = []
+  let i = 1
+  while (i <= bufnr("$"))
+    if (bufexists(i) && buflisted(i))
+      call add(ListedBuffers, i)
+    endif
+    let i+= 1
+  endwhile
+  for item in ListedBuffers
+    if (item != curBuffer)
+      execute "silent bdelete " . item
+    endif
+  endfor
 endfunction
 " }}}
 
 " Find: find a file in the tree below who's name matches exerpts given. "{{{
 function! Find(name)
-    let l:_name = substitute(a:name, "\\s", "*", "g")
-    let l:list = split(system("find . -iname '*" . l:_name . "*'"), '\n')
+  let l:_name = substitute(a:name, "\\s", "*", "g")
+  let l:list = split(system("find . -iname '*" . l:_name . "*'"), '\n')
 
-    let index = 1
-    let matches = []
-    let excludes = ["\.svn"]
-    for item in l:list
-        for pat in excludes
-            if match(item, pat) != -1
-                call remove(l:list, item)
-                continue
-            else
-                call add(matches, index . "\t" . item)
-                let index += 1
-            endif
-        endfor
+  let index = 1
+  let matches = []
+  let excludes = ["\.svn"]
+  for item in l:list
+    for pat in excludes
+      if match(item, pat) != -1
+        call remove(l:list, item)
+        continue
+      else
+        call add(matches, index . "\t" . item)
+        let index += 1
+      endif
     endfor
+  endfor
 
-    let l:num = len(matches)
-    if l:num < 1
-        echo "'".a:name."' not found"
-        return
-    endif
+  let l:num = len(matches)
+  if l:num < 1
+    echo "'".a:name."' not found"
+    return
+  endif
 
   if l:num != 1
-      for item in matches
-          echo item
-      endfor
-      let l:input=input("Which ? (<enter>=nothing): ")
+    for item in matches
+      echo item
+    endfor
+    let l:input=input("Which ? (<enter>=nothing): ")
 
-      if strlen(l:input)==0
-          return
-      endif
+    if strlen(l:input)==0
+      return
+    endif
 
-      if strlen(substitute(l:input, "[0-9]", "", "g"))>0
-          echo "\nNot a number"
-          return
-      endif
+    if strlen(substitute(l:input, "[0-9]", "", "g"))>0
+      echo "\nNot a number"
+      return
+    endif
 
-      if l:input<1 || l:input>l:num
-          echo "\nOut of range"
-          return
-      endif
+    if l:input<1 || l:input>l:num
+      echo "\nOut of range"
+      return
+    endif
 
-      let l:line = matches[l:input - 1]
+    let l:line = matches[l:input - 1]
   else
-      let l:line=matches[0]
+    let l:line=matches[0]
   endif
 
   let l:line = substitute(l:line, ".*\t", "", "")
@@ -514,9 +498,9 @@ command! -nargs=1 Find :call Find("<args>")
 "}}}
 
 function! Hex2Dec()
-   let hexstr = expand("<cword>")
-   let decstr = hexstr + 0
-   echo "Decimal: " . decstr
+  let hexstr = expand("<cword>")
+  let decstr = hexstr + 0
+  echo "Decimal: " . decstr
 endfunction
 map <Leader>hd :call Hex2Dec()<CR>
 
