@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/kvn/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -101,4 +101,4 @@ fi
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
-if [ -e /Users/kvn/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/kvn/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
