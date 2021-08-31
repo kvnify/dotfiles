@@ -14,7 +14,20 @@ echo "Changing to the $dir directory"
 cd $dir
 echo "...done"
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks
+if [ $SPIN ]; then
+  echo "Installing oh-my-zsh!"
+  sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
+  echo "...done"
+
+  echo "Cloning Vundle.vim"
+  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  echo "...done"
+
+  echo "Installing vim plugins"
+  vim +PluginInstall +qall
+  echo "...done"  
+fi
+
 for file in $files; do
   if [ -L ~/.$file ]; then
     rm ~/.$file
@@ -25,20 +38,3 @@ for file in $files; do
   echo "Creating symlink to $file in home directory."
   ln -s $dir/$file ~/.$file
 done
-
-if [ $SPIN ]; then
-  sudo apt-get install -y wget
-fi
-
-echo "Installing oh-my-zsh!"
-sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)"
-echo "...done"
-
-echo "Cloning Vundle.vim"
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-echo "...done"
-
-echo "Installing vim plugins"
-vim +PluginInstall +qall
-echo "...done"
-
