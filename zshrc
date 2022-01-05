@@ -70,7 +70,7 @@ CASE_SENSITIVE="true"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git node rails docker ruby git-extras github nvm rvm rust yarn rake rbenv react-native pod gem cargo bundler gcloud)
+plugins=(git node rails docker ruby git-extras github nvm rvm rust yarn rake rbenv react-native pod gem bundler gcloud)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -102,3 +102,9 @@ fi
 
 [ -f /opt/dev/dev.sh ] && source /opt/dev/dev.sh
 if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
+[[ -f /opt/dev/sh/chruby/chruby.sh ]] && type chruby >/dev/null 2>&1 || chruby () { source /opt/dev/sh/chruby/chruby.sh; chruby "$@"; }
+
+[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
+
+
