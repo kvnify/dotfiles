@@ -2,18 +2,62 @@
         ui = auto
         diff = auto
 [alias]
+        # Basic shortcuts
         co = checkout
+        br = branch
+        ci = commit
+        st = status
+        sw = switch
+
+        # Diff and viewing
         cdiff = diff --color=always
-        unstage = reset HEAD --
+        df = diff
+        dfs = diff --staged
         last = log -1 HEAD
         tip = log -1 HEAD
+
+        # Log formats
         top = log --oneline -10 --date=short --pretty=tformat:\"%Cgreen%h %Creset %cn %Cblue[%Creset%cd (%cr)%Cblue]>>%Creset %s\"
         oneline = log --oneline --date=short --pretty=tformat:\"%Cgreen%h %Creset %cn %Cblue[%Creset%cd (%cr)%Cblue]>>%Creset %s\"
-        st = status
-        grepn = grep --name-only
-        pull = pull --rebase
         graph = log --graph --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(bold white)— %an%C(reset)%C(bold yellow)%d%C(reset)' --abbrev-commit --date=relative
+        lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+        lol = log --oneline --decorate
+
+        # Staging and commits
+        unstage = reset HEAD --
         uncommit = reset --soft HEAD~
+        amend = commit --amend --no-edit
+        wip = !git add -A && git commit -m 'WIP'
+
+        # Stash shortcuts
+        ss = stash save
+        sp = stash pop
+        sl = stash list
+        sd = stash drop
+
+        # Remote operations
+        pull = pull --rebase
+        pushf = push --force-with-lease
+        publish = !git push -u origin $(git branch --show-current)
+
+        # Branch management
+        cleanup = !git branch --merged | grep -v '\\*\\|main\\|master' | xargs -n 1 git branch -d
+        recent = branch --sort=-committerdate --format='%(committerdate:relative)%09%(refname:short)'
+
+        # Search
+        grepn = grep --name-only
+        find = !git ls-files | grep -i
+
+        # Interactive shortcuts
+        ap = add -p
+        rbi = rebase -i
+
+        # Show current branch name
+        current = branch --show-current
+
+        # Aliases for Graphite compatibility
+        stack = !gt stack
+        submit = !gt submit
 [difftool "Kaleidoscope"]
         cmd = ksdiff --partial-changeset --relative-path \"$MERGED\" -- \"$LOCAL\" \"$REMOTE\"
 

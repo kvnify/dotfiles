@@ -37,9 +37,59 @@ for file in $files; do
   if [ -L ~/.$file ]; then
     rm ~/.$file
   else
-    mv ~/.$file $olddir/
+    mv ~/.$file $olddir/ 2>/dev/null || true
   fi
 
   echo "Creating symlink to $file in home directory."
   ln -s $dir/$file ~/.$file
 done
+
+#===============================================================================
+# Claude Code Configuration
+#===============================================================================
+echo ""
+echo "Setting up Claude Code configuration..."
+
+# Create Claude Code config directory
+claude_config_dir="$HOME/.claude"
+mkdir -p "$claude_config_dir"
+
+# Symlink Claude settings
+if [ -f "$dir/claude/settings.json" ]; then
+  if [ -L "$claude_config_dir/settings.json" ]; then
+    rm "$claude_config_dir/settings.json"
+  else
+    mv "$claude_config_dir/settings.json" "$olddir/" 2>/dev/null || true
+  fi
+  ln -s "$dir/claude/settings.json" "$claude_config_dir/settings.json"
+  echo "Linked Claude Code settings.json"
+fi
+
+# Copy CLAUDE.md to home directory for global project context
+if [ -f "$dir/claude/CLAUDE.md" ]; then
+  cp "$dir/claude/CLAUDE.md" "$HOME/CLAUDE.md"
+  echo "Copied CLAUDE.md to home directory"
+fi
+
+echo "...Claude Code configuration done"
+
+#===============================================================================
+# Summary
+#===============================================================================
+echo ""
+echo "=========================================="
+echo "Dotfiles installation complete!"
+echo "=========================================="
+echo ""
+echo "Installed configurations:"
+echo "  - Zsh with Powerlevel10k theme"
+echo "  - Vim with vim-plug and CoC.nvim"
+echo "  - Git config with extended aliases"
+echo "  - Claude Code settings"
+echo ""
+echo "Next steps:"
+echo "  1. Restart your shell or run: source ~/.zshrc"
+echo "  2. Open Vim and run :PlugInstall to install plugins"
+echo "  3. Install a Nerd Font for proper icons"
+echo "     Recommended: JetBrains Mono Nerd Font"
+echo ""
