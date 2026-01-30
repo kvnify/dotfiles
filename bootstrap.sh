@@ -23,12 +23,13 @@ if [ $SPIN ]; then
   git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k
   echo "...done"
 
-  echo "Cloning Vundle.vim"
-  git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  echo "Installing vim-plug..."
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   echo "...done"
 
-  echo "Installing vim plugins"
-  vim +PluginInstall +qall
+  echo "Installing vim plugins with vim-plug..."
+  vim +PlugInstall +qall
   echo "...done"
 fi
 
