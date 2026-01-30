@@ -1,14 +1,18 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# Enable Powerlevel10k instant prompt for faster shell startup
+# Must be near the top of ~/.zshrc, before any console output
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+# Set name of the theme to load
+# Using Powerlevel10k for a modern, feature-rich prompt
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -107,4 +111,17 @@ if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc
 
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
+#===============================================================================
+# Graphite CLI Completions
+#===============================================================================
+# Enable Graphite (gt) shell completions if installed
+if command -v gt &> /dev/null; then
+  eval "$(gt completion)"
+fi
+
+#===============================================================================
+# Powerlevel10k Configuration
+#===============================================================================
+# Load Powerlevel10k config file
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
 
