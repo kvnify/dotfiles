@@ -1,6 +1,6 @@
 #!/bin/bash
 
-dir=~/dotfiles
+dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 olddir=~/dotfiles-backup
 files="vimrc zshrc gitconfig gitignore_global p10k.zsh"
 
@@ -43,6 +43,20 @@ for file in $files; do
   echo "Creating symlink to $file in home directory."
   ln -s $dir/$file ~/.$file
 done
+
+#===============================================================================
+# Powerlevel10k Theme
+#===============================================================================
+p10k_dir="${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+if [ ! -d "$p10k_dir" ]; then
+  echo ""
+  echo "Installing Powerlevel10k theme..."
+  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$p10k_dir"
+  echo "...done"
+else
+  echo ""
+  echo "Powerlevel10k theme already installed"
+fi
 
 #===============================================================================
 # Claude Code Configuration
