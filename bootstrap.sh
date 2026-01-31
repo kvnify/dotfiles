@@ -59,6 +59,49 @@ else
 fi
 
 #===============================================================================
+# Meslo Nerd Font (recommended for Powerlevel10k)
+#===============================================================================
+echo ""
+echo "Checking for MesloLGS NF font..."
+
+# Determine font directory based on OS
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  font_dir="$HOME/Library/Fonts"
+else
+  font_dir="$HOME/.local/share/fonts"
+fi
+mkdir -p "$font_dir"
+
+# Download fonts if not already installed
+font_base_url="https://github.com/romkatv/powerlevel10k-media/raw/master"
+fonts=(
+  "MesloLGS NF Regular.ttf"
+  "MesloLGS NF Bold.ttf"
+  "MesloLGS NF Italic.ttf"
+  "MesloLGS NF Bold Italic.ttf"
+)
+
+fonts_installed=true
+for font in "${fonts[@]}"; do
+  if [ ! -f "$font_dir/$font" ]; then
+    fonts_installed=false
+    break
+  fi
+done
+
+if [ "$fonts_installed" = false ]; then
+  echo "Installing MesloLGS NF fonts..."
+  for font in "${fonts[@]}"; do
+    encoded_font=$(echo "$font" | sed 's/ /%20/g')
+    curl -fLo "$font_dir/$font" "$font_base_url/$encoded_font"
+  done
+  echo "...done"
+  echo "NOTE: Set your terminal font to 'MesloLGS NF' for proper icon rendering"
+else
+  echo "MesloLGS NF fonts already installed"
+fi
+
+#===============================================================================
 # Claude Code Configuration
 #===============================================================================
 echo ""
@@ -97,13 +140,13 @@ echo "=========================================="
 echo ""
 echo "Installed configurations:"
 echo "  - Zsh with Powerlevel10k theme"
+echo "  - MesloLGS NF font for terminal icons"
 echo "  - Vim with vim-plug and CoC.nvim"
 echo "  - Git config with extended aliases"
 echo "  - Claude Code settings"
 echo ""
 echo "Next steps:"
-echo "  1. Restart your shell or run: source ~/.zshrc"
-echo "  2. Open Vim and run :PlugInstall to install plugins"
-echo "  3. Install a Nerd Font for proper icons"
-echo "     Recommended: JetBrains Mono Nerd Font"
+echo "  1. Set your terminal font to 'MesloLGS NF'"
+echo "  2. Restart your shell or run: source ~/.zshrc"
+echo "  3. Open Vim and run :PlugInstall to install plugins"
 echo ""
