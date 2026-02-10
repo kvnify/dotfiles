@@ -195,6 +195,11 @@ fi
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
 
 #===============================================================================
+# Claude native path
+#===============================================================================
+export PATH="$HOME/.local/bin:$PATH"
+
+#===============================================================================
 # Node.js & JavaScript Development
 #===============================================================================
 # NVM (Node Version Manager) - lazy loading for faster shell startup
@@ -300,4 +305,3 @@ fi
 #===============================================================================
 # Load Powerlevel10k config file
 [[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
-
