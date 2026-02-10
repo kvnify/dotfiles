@@ -60,3 +60,8 @@ This file provides context for Claude Code when working on projects.
 - Keep README files up to date
 - Use JSDoc/TSDoc for TypeScript
 - Use YARD for Ruby
+
+## Pull Requests
+
+- Do not add "Generated with Claude Code" footers to PR descriptions
+- Only include attribution when PRs are fully automated without human direction
